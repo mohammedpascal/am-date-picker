@@ -1,15 +1,15 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('am.date-picker')
         .controller('amDatePickerDialogCtrl', DialogController);
 
-    DialogController.$inject = ['$timeout', '$mdDialog'];
+    DialogController.$inject = ['$timeout', '$mdPanel'];
 
-    function DialogController($timeout, $mdDialog) {
-        var dialog = this,
-            delay = 110;
+    function DialogController($timeout, $mdPanel) {
+        var dialog = this;
+        var delay = 110;
 
         dialog.cancel = cancel;
         dialog.displayYearSelection = displayYearSelection;
@@ -57,18 +57,18 @@
         }
 
         function cancel() {
-            $mdDialog.cancel();
+            dialog.callback.cancel();
         }
 
         function displayYearSelection() {
             dialog.yearSelection = true;
-            $timeout(function() {
+            $timeout(function () {
                 var yearSelector = angular.element(document.querySelector('.am-date-picker__year-selector')),
                     activeYear = angular.element(document.querySelector('.am-date-picker__year--is-active')),
                     activeYearHeight = activeYear[0].offsetHeight;
 
                 yearSelector[0].scrollTop = activeYear[0].offsetTop - yearSelector[0].offsetTop -
-                                            yearSelector[0].clientHeight/2 + activeYearHeight/2;
+                    yearSelector[0].clientHeight / 2 + activeYearHeight / 2;
             });
         }
 
@@ -99,7 +99,7 @@
         }
 
         function hide() {
-            $mdDialog.hide(dialog.dateMoment.toDate());
+            dialog.callback.hide(dialog.dateMoment.toDate());
         }
 
         function hideYearSelection() {
@@ -108,7 +108,7 @@
 
         function isOutOfRange(dateMoment) {
             return angular.isDate(dialog.minDate) && dateMoment.isBefore(dialog.minDate, 'day') ||
-                   angular.isDate(dialog.maxDate) && dateMoment.isAfter(dialog.maxDate, 'day');
+                angular.isDate(dialog.maxDate) && dateMoment.isAfter(dialog.maxDate, 'day');
         }
 
         function nextMonth() {
@@ -120,7 +120,7 @@
         function onNextMonth() {
             dialog.monthChanged = false;
             dialog.next = true;
-            $timeout(function() {
+            $timeout(function () {
                 dialog.monthChanged = true;
             }, delay);
         }
@@ -128,7 +128,7 @@
         function onPrevMonth() {
             dialog.next = false;
             dialog.monthChanged = false;
-            $timeout(function() {
+            $timeout(function () {
                 dialog.monthChanged = true;
             }, delay);
         }
@@ -140,7 +140,9 @@
         }
 
         function today() {
-            if (dialog.yearSelection) { dialog.hideYearSelection(); }
+            if (dialog.yearSelection) {
+                dialog.hideYearSelection();
+            }
             dialog.select((dialog.locale) ? moment().locale(dialog.locale) : moment());
         }
 
