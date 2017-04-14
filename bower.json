@@ -1,13 +1,13 @@
 {
   "name": "angular-material-date-picker",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "authors": [
     "Aleksey Maslakov"
   ],
   "description": "Simple date picker built with angular material framework and based on lumx's date picker controller",
   "main": [
     "dist/am-date-picker.min.js",
-    "dist/css/am-date-picker_light-theme.css"
+    "dist/am-date-picker.min.css"
   ],
   "repository": {
     "type": "git",
